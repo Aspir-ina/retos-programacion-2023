@@ -38,9 +38,9 @@ const words: string[] = [
   "lapiz",
 ]
 
-const randomNumber = (maxRandomizeNumber: number): number => Math.floor(Math.random() * maxRandomizeNumber)
+const random = (max: number, min: number = 0): number => Math.floor(Math.random() * (max - min + 1) + min)
 
-const randomWord = (): string => words[randomNumber(words.length)]
+const randomWord = (): string => words[random(words.length)]
 
 const maxHiddenLetters = (word: string) => Math.round((word.length / 100) * PERCENTAGE_OF_HIDDEN_LETTERS)
 
@@ -48,7 +48,7 @@ const hideLettersFromWord = (word: string, maxHiddenLetters: number): string => 
   let hiddenWord: string = word
 
   for (let i = 0; i < maxHiddenLetters; i++) {
-    const randomLetterIndex: number = randomNumber(words.length)
+    const randomLetterIndex: number = random(maxHiddenLetters, i)
     hiddenWord = hiddenWord.replace(hiddenWord[randomLetterIndex], "_")
   }
 
@@ -115,7 +115,6 @@ const game = async () => {
           outro(`¡Has acertado la letra '${userAnswer}'!`)
         }
 
-
       } else {
         outro(`¡Has fallado la letra '${userAnswer}'!`)
       }
@@ -128,7 +127,7 @@ const game = async () => {
   }
 
   if (isWinner) {
-    outro("¡Has ganado!")
+    outro(`¡Has ganado!, La palabra era ${word}`)
   }
 }
 
